@@ -1,23 +1,23 @@
-// This is the URL of the google sheet public export
 var URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTMpMJUwb0tp1KYel2iu5vQQsvACrgfP7FdAAiFxEUlqk5tkX-HEBI5xcLyocnd5JSemCxMM82Sz1pW/pub?output=csv';
 
 
 $.get(URL, function (textString) {
-        console.log("data loaded");
-        data_full = d3.csvParseRows(textString);
-        data = load_data(data_full);
+    console.log("data loaded");
+    data_full = d3.csvParseRows(textString);
+    console.log(data_full);
 
-        scales = {};
-        scales_score = {};
-        // Compute scales
-        for (var dim in tick_formats) {
-            scales[dim] = gen_scale(dim);
-            scales_score[dim] = gen_scale(dim, 0);
+    data = []
+    data_full.forEach(function(line, ind){
+        if (ind > 0){
+
+
+            o = {
+                'name': line[0],
+                'humour': +line[1].replace(",",".")
+                ''
+            }
+            data.push(o);
         }
-        console.log(data);
-        // Compute weeks
-        var weeks = d3.nest().key(function (d) {
-            return d.week;
-        }).entries(data).map(function (d) {
-            return +d.key;
-        });
+    });
+    console.log(data);
+});
