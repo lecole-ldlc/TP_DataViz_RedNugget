@@ -7,4 +7,17 @@ $.get(URL, function (textString) {
         data_full = d3.csvParseRows(textString);
         data = load_data(data_full);
 
-        
+        scales = {};
+        scales_score = {};
+        // Compute scales
+        for (var dim in tick_formats) {
+            scales[dim] = gen_scale(dim);
+            scales_score[dim] = gen_scale(dim, 0);
+        }
+        console.log(data);
+        // Compute weeks
+        var weeks = d3.nest().key(function (d) {
+            return d.week;
+        }).entries(data).map(function (d) {
+            return +d.key;
+        });
