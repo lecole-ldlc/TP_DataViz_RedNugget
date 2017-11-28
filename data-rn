@@ -6,3 +6,5 @@ $.get(URL, function (textString) {
         console.log("data loaded");
         data_full = d3.csvParseRows(textString);
         data = load_data(data_full);
+
+        
